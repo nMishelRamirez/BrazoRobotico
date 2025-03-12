@@ -39,7 +39,7 @@ elseif get(handles.yawRadio,'Value') || get(handles.pitchRadio,'Value') || get(h
         if get(handles.yawRadio,'Value')
             EV3.writeMailBox('gradoQ','text','yaw')
             
-        elseif get(handles.yawRadio,'Value')
+        elseif get(handles.pitchRadio,'Value')
             EV3.writeMailBox('gradoQ','text','pitch')
         else
             EV3.writeMailBox('gradoQ','text','roll')

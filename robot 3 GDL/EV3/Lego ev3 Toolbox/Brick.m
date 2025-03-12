@@ -112,9 +112,8 @@ classdef Brick < handle
              opt.wfAddr = '192.168.1.104';
              opt.wfPort = 5555;
              opt.wfSN = '0016533dbaf5';
-             opt.ioType = 'instrbt';
+             opt.ioType = 'usb';
              opt.serPort = '/dev/rfcomm0';
-             % opt.serPort = 'COM12';
              % read in the options
              opt = tb_optparse(opt, varargin);
              % select the connection interface
@@ -144,7 +143,6 @@ classdef Brick < handle
                 brick.conn = btBrickIO(brick.debug,brick.serPort);
                 connect = 1;
              end
-             
              % instrumentation and control wifi 
              if(strcmp(opt.ioType,'instrwifi'))
                 brick.debug = opt.debug;
@@ -175,13 +173,7 @@ classdef Brick < handle
             %
             % delete(b) closes the connection to the brick
             
-            % brick.conn.close();
-            if isfield(brick, 'conn') && isvalid(brick.conn)
-                brick.conn.close();
-            else
-                disp('La conexión ya estaba cerrada o no se ha establecido correctamente.');
-            end
-
+            brick.conn.close();
         end  
         
         function send(brick, cmd)

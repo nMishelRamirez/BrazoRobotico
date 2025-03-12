@@ -1,6 +1,8 @@
 % Ejecutable del archivo
+% Definicion de variables globales
 global EV3 myoObject
 
+% Limpieza de variables y cierre de figuras
 clearvars -global -EXCEPT myoObject EV3
 close all;
 clc;

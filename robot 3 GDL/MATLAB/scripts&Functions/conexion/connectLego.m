@@ -3,38 +3,25 @@ function isConnectedLego=connectLego(handles)
 % se tiene una bandera. isConnectedLego. La función detecta si existe o no
 % una conexión existente.
 
+
 global EV3
 isConnectedLego = 1;
 
 try
-    beep(EV3)  % Emite un sonido al dispositivo EV3 para verificar la conexión
+    beep(EV3)
     set( handles.auxiliarText, 'String' , 'L ok');
 catch
-    %% Si falla, intenta crear la conexión
-    try
-    % Intentar establecer la conexión con el EV3 a través de Bluetooth
-    disp('cL: Intentando establecer la conexión Bluetooth...');
-    EV3 = Brick('ioType', 'instrbt', 'btDevice', 'EV3', 'btChannel', 1);  
+    %% borramos todas las conexiones que haya    
     
-    % Verificar si la conexión fue exitosa
-    if isvalid(EV3)
-        beep(EV3);  % Emite un sonido si la conexión es exitosa
-        set(handles.auxiliarText, 'String', 'L start!');
-        disp('Conexión Bluetooth exitosa!');
-    else
-        disp('Fallo al establecer la conexión Bluetooth');
-        set(handles.auxiliarText, 'String', '!L');  % Mensaje de error
-        isConnectedLego = 0;
-    end
+    try
+        EV3= Brick('ioType','instrbt','btDevice','EV3','btChannel',1);
+        beep(EV3)
+        set( handles.auxiliarText , 'String' , 'L start!');
     catch
-        % Si ocurre un error, cierra cualquier conexión existente
-        fclose(instrfindall); 
+        fclose( instrfindall ) ;
         delete(instrfindall);
-        disp('cL: Error en la conexión Bluetooth');
-        disp(getReport(exception));  % Mostrar el informe del error
-        set(handles.auxiliarText, 'String', '!L');  % Mensaje de error
-        isConnectedLego = 0;  % Se establece como no conectado
+        set( handles.auxiliarTex , 'String' , '!L');
+        isConnectedLego=0;
     end
-
 end
 end

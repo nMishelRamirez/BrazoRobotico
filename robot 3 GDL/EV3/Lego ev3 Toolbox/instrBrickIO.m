@@ -67,28 +67,11 @@ classdef instrBrickIO < BrickIO
             end
             % bluetooth
             % brickIO = instrBrickIO(1,'bt','EV3',1)
-            disp(['Valor de brickIO.serConn: ', brickIO.serConn]);
             if(strcmp(brickIO.serConn,'bt'))
-               disp('iB: Entrando en la sección de Bluetooth');
                brickIO.btDevice = varargin{3};
                brickIO.btChannel = varargin{4};
                % set the bt handle
-               % brickIO.handle = Bluetooth(brickIO.btDevice,brickIO.btChannel);
-               
-               % Imprimir en la consola cuando se empieza la conexión
-               disp('iB: Iniciando conexión Bluetooth...');
-               fprintf('iB: Intentando conectar a: %s en el canal: %d\n', brickIO.btDevice, brickIO.btChannel);
-               % Conectar a Bluetooth
-               brickIO.handle = Bluetooth(brickIO.btDevice, brickIO.btChannel);
-               disp(brickIO.handle);
-               % Verificar si la conexión fue exitosa
-               if isvalid(brickIO.handle)
-                   
-                   disp('iB: Conexión Bluetooth establecida correctamente');
-               else
-                   disp('Fallo al establecer la conexión Bluetooth');
-               end
-
+               brickIO.handle = Bluetooth(brickIO.btDevice,brickIO.btChannel);
                % open the bt handle
                brickIO.open;
             end
@@ -135,20 +118,9 @@ classdef instrBrickIO < BrickIO
             
             if brickIO.debug > 0
                 fprintf('instrBrickIO open\n');
-                disp('Abriendo conexión Bluetooth...');
             end
             % open the instr handle
             fopen(brickIO.handle);
-
-            try
-                fopen(brickIO.handle);
-                if brickIO.debug > 0
-                    disp('Conexión abierta exitosamente');
-                end
-            catch exception
-                    disp('Error al abrir la conexión Bluetooth');
-                    disp(getReport(exception));  % Mostrar el error detallado
-            end
         end
         
         function close(brickIO)
